@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecommerce-Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}"> 
+    <!-- CSS only -->
+</head>
+
+<style>
+
+</style>
+
+<body>
+    <header>
+        <nav class="container-main">
+            <div class="nav-left">
+                <div class="logo-main">
+                    <a href="#"><img src="{% static 'IMG/logo_reieee_uni_2.png' %}" height="90px" width="270px"></a>
+                </div>
+                <div class="nav-search">
+                    <form action="#">
+                        <input class="desing-search"  type="search"  maxlength="50">
+                        <input class="desing-button" type="submit" value="Buscar">
+                    </form>
+                </div>
+                <div class="nav-log-reg">
+                    <a href="">Login</a>
+                    <a href="">Register</a>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="nav-tools">
+                    <ul>
+                        <li>Home</li>
+                        <li>Nuevo</li>
+                        <li>Capítulos</li>
+                        <li>Grupos de Afinidad</li>
+                    </ul>
+                </div>
+                
+            </div>
+        </nav>
+    </header>
+    <main>
+        {% for i in products %}
+            <div class="card">
+                <div class="card-image">
+                    <!-- <h4>{{i.image}}</h4> -->
+                    <img src="../../media/{{i.image}}" alt="" class="image-resize"></p>
+                </div>
+                <div class="card-text">
+                    <h2>{{i.nombre}}</h2>
+                    <p>Description: {{i.description}}</p>
+                    <p>Stock: {{i.stock}}</p>
+                    <span class="price">S/{{i.price}}</span>
+                </div>
+                <div class="card-buttom">
+                    <form action="/addToCard/{{i.id}}/" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="Enviar">
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </main>
+    <footer>
+
+    </footer>
+</body>
+</html>
