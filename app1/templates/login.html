@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Login</title>
+</head>
+<body>
+    <div class="container-2">
+        <div class="offsest-md-5">
+            <a href="/" class="top nav-style btn btn-outline-primary">&#8249;&nbsp;&nbsp; Home</a>
+        </div>
+        <h1 class='display-4 ml-3'><small><u>Login</u></small></h1>
+        <form action='/login_process' method='POST'>
+                    {% csrf_token %}
+                    <div class="ml-5  form-group w-25">
+                                    <label for="formGroupExampleInput">Email</label>
+                    {% for message in messages %}
+                            {% if 'mal_dato_login_e' in message.extra_tags %}
+                                    <div class="alert alert-danger" role="alert">
+                                            {{message}}
+                                    </div>
+                            {% endif %}
+                    {% endfor %}
+                                    <input type="text" class="form-control" id="formGroupExampleInput" name = 'email'>
+                    </div>
+                    <div class="ml-5  form-group w-25">
+                                    <label for="formGroupExampleInput">Password</label>
+                    {% for message in messages %}
+                            {% if 'mal_login_pass_dato' in message.extra_tags %}
+                                    <div class="alert alert-danger" role="alert">
+                                            {{message}}
+                                    </div>
+                            {% endif %}
+                        
+                    {% endfor %}
+                                    <input type="password" class="form-control" id="formGroupExampleInput" name = 'password'>
+                    </div>
+                    <button type="submit" class="ml-5 btn btn-primary">Login</button>
+        </form>
+    </div>
+</body>
+</html>

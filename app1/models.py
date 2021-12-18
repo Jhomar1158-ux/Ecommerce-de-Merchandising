@@ -5,15 +5,15 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Users(models.Model):
     name=models.CharField(max_length=144)
     lastname=models.CharField(max_length=144)
-    email=models.EmailField()
+    email=models.EmailField(max_length=255)
     password=models.CharField(max_length=150)
     default_shipping_address=models.CharField(max_length=150)
-    country=models.CharField(max_length=150)
+    department=models.CharField(max_length=150)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 
     def __str__(self):
-        return f"id: {self.id}, Name:{self.name}, email:{self.lastname}"
+        return f"id: {self.id}, Name:{self.name}, email:{self.email}"
 
 class Product(models.Model):
     nombre=models.CharField(max_length=144)

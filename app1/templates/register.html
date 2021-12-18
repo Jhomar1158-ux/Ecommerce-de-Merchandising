@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Registro</title>
+</head>
+<body>
+    <div class="container-1">
+        <div class="offsest-md-5">
+            <a href="/" class="top nav-style btn btn-outline-primary">&#8249;&nbsp;&nbsp; Home</a>
+        </div>
+        
+        <h1 class='display-4 ml-3'><small><u>Register</u></small></h1>
+        <form action = '/registro_process' method = 'POST'>
+            {% csrf_token %}
+            
+                <div class=" ml-5  form-group w-25">
+                        <label for="formGroupExampleInput">Nombre</label>
+                        {% for message in messages %}
+                                {% if 'fn_error' in message.extra_tags %}
+                                <div class="alert alert-danger" role="alert">
+                                        {{message}}
+                                </div>
+                                {% endif %}
+                            
+                        {% endfor %}
+                        <input type="text" class="form-control" id="formGroupExampleInput" name = "name">
+                </div>
+
+                <div class="ml-5  form-group w-25">
+                        <label for="formGroupExampleInput">Apellidos</label>
+                        {% for message in messages %}
+                                {% if 'ln_error' in message.extra_tags %}
+                                <div class="alert alert-danger" role="alert">
+                                        {{message}}
+                                </div>
+                                {% endif %}
+                            
+                        {% endfor %}
+                        <input type="text" class="form-control" id="formGroupExampleInput" name = 'apellido'>
+                </div>
+
+                <div class="ml-5  form-group w-25">
+                        <label for="formGroupExampleInput">Email</label>
+            {% for message in messages %}
+                        {% if 'email_error' in message.extra_tags %}
+                        <div class="alert alert-danger" role="alert">
+                                {{message}}
+                        </div>
+                        {% endif %}
+                    
+            {% endfor %}
+                        <input type="text" class="form-control" id="formGroupExampleInput" name = 'email'>
+                </div>
+
+                <div class="ml-5  form-group w-25">
+                        <label for="formGroupExampleInput">Password</label>
+                        {% for message in messages %}
+                                    {% if 'pw_error' in message.extra_tags %}
+                                    <div class="alert alert-danger" role="alert">
+                                            {{message}}
+                                    </div>
+                                    {% endif %}
+                                
+                        {% endfor %}
+                        <input type="password" class="form-control" id="formGroupExampleInput" name = 'password'>
+                </div>
+
+                <div class="ml-5 form-group w-25">
+                        <label for="formGroupExampleInput">Confirm Password</label>
+                        <input type="password" class="form-control" id="formGroupExampleInput" name = 'confirm_password'>
+                </div>
+                <div class="ml-5 form-group w-25">
+                    <label for="formGroupExampleInput">Tu dirección</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput" name = 'direccion'>
+                </div>
+                <div class="ml-5 form-group w-25">
+                    <label for="formGroupExampleInput">Departamento</label>
+                    <select name="selectDepartamento" class="form-control">
+                        <option value="">Seleccione</option>
+                        <option value="Amazonas">Amazonas</option>
+                        <option value="Ancash">Ancash</option>
+                        <option value="Apurímac">Apurímac</option>
+                        <option value="Arequipa">Arequipa</option>
+                        <option value="Ayacucho">Ayacucho</option>
+                        <option value="Cajamarca">Cajamarca</option>
+                        <option value="Callao">Callao</option>
+                        <option value="Cuzco">Cuzco </option>
+                        <option value="Huancavelica">Huancavelica</option>
+                        <option value="Huánuco">Huánuco</option>
+                        <option value="Ica">Ica</option>
+                        <option value="Junín">Junín</option>
+                        <option value="La_Libertad">La Libertad</option>
+                        <option value="Lambayeque">Lambayeque</option>
+                        <option value="Lima">Lima</option>
+                        <option value="Loreto">Loreto</option>
+                        <option value="Madre_de_Dios">Madre de Dios</option>
+                        <option value="Moquegua">Moquegua</option>
+                        <option value="Pasco">Pasco</option>
+                        <option value="Piura">Piura</option>
+                        <option value="Puno">Puno</option>
+                        <option value="San_Martín">San Martín</option>
+                        <option value="Tacna">Tacna</option>
+                        <option value="Tumbes">Tumbes</option>
+                        <option value="Ucayali">Ucayali</option>
+                    </select>
+                </div>
+                <button type="submit" class="ml-5 btn btn-primary">Register</button>
+        </form>
+    </div>
+</body>
+</html>
+
+<!-- Departamentos - Provincia - Distrito -->
+<!-- https://codificalo.com/select-dependiente-departamentos-provincias-y-distritos-de-peru-con-puro-javascript/ -->
