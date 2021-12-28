@@ -1,6 +1,8 @@
-from django.shortcuts import redirect, render
+from django.http.response import HttpResponse
+from django.shortcuts import redirect,HttpResponse, render
 from app1.models import *
 from django.contrib import messages
+from django.core import serializers
 
 import re
 import bcrypt
@@ -21,11 +23,32 @@ def index(request):
     }
     return render(request, "index.html", context)
 
+
+# ====================PROBANDO EL SEARCH CON SESSION===============================
+# def index(request):
+#     if 'login' not in request.session:
+#         request.session['login'] = False
+    
+#     if 'u_id' not in request.session:
+#         request.session['u_id'] = 0
+    
+#     if 'result' in request.session:
+#         context={
+#             'products':request.session['result']
+#         }
+#         print('*'*10)
+#         print(context['products'])
+#         print('*'*10)
+#     else:
+#         context={
+#             'products':Product.objects.all()
+#         }
+#     return render(request, "index.html", context)
+
 # LOGIN AND REGISTER
 
 def register_template(request):
     return render(request, "register.html")
-
 
 
 
@@ -110,8 +133,31 @@ def home(request):
         return redirect('/')
 
 
-def secret(request):
-    return render(request,'carousel_secret.html')
+# def secret(request):
+#     return render(request,'carousel_secret.html')
+
+
+
+
+
+# ========== SEarch==========
+def search(request):
+    var_search=request.POST['search']
+    # Quiero que me des los resultados de este nombre a partir de las letras de var_search
+    var_result=Product.objects.filter(nombre__contains=var_search)
+    print(var_result)
+    context={
+        'products':var_result
+    }
+    return render(request, 'index.html',context)
+
+
+
+
+
+# Probar #2
+# POST AND var==name
+# Usar un def se search ->
 
 
 
@@ -120,8 +166,20 @@ def secret(request):
 
 
 
-
-
+# def search(request):
+#     var_search="Polo"
+#     # Quiero que me des los resultados de este nombre a partir de las letras de var_search
+#     var_result=Product.objects.filter(nombre__contains=var_search)
+#     print(var_result)
+#     # final_result=[]
+#     # for i in var_result:
+#     #     final_result.append(i)
+#     if 'result' in request.session:
+#         del request.session['result']
+#     request.session['result']=serializers.serialize('json',[ var_result, ])
+#     print('*'*10)
+#     print(request.session['result'])
+#     return redirect('/')
 
 
 # ===========LOGOUT============
@@ -131,36 +189,42 @@ def logout(request):
 
 
 
-
-
-
-
-
 # CARRITO DE COMPRAS
+# def addToCard(request, id):
+#     obj_id_user=Users.objects.get(id=1)
+#     obj_order=Orders.objects.filter(user_id=obj_id_user)
+#     order=''
+#     for i in obj_order:
+#         if i.order_status == 'incomplete':
+#             order=i
+#             break
+#     obj_order_details=Order_details.objects.filter(order_id=order)
+#     obj_product_id=Product.objects.get(id=id)
+
+#     for i in obj_order_details:
+#         if i.product_id == obj_product_id:
+#             i.quantity+=1
+#             i.save()
+#             break
+#     print(i.quantity)
+#     print(obj_order_details)
+#     return redirect('/')
+
 def addToCard(request, id):
-    
-    
-    obj_id_user=Users.objects.get(id=1)
-    obj_order=Orders.objects.filter(user_id=obj_id_user)
-    order=''
-    for i in obj_order:
-        if i.order_status == 'incomplete':
-            order=i
-            break
-    obj_order_details=Order_details.objects.filter(order_id=order)
-    obj_product_id=Product.objects.get(id=id)
+    producto=Product.objects.filter(id=id)
+    if producto:
+        if 'product_car' not in request.session:
+            request.session['product_car'] = 0
+        if 'product_car' in request.session:
+            print('--append--')
+            request.session['product_car'].append(id)
 
-    for i in obj_order_details:
-        if i.product_id == obj_product_id:
-            i.quantity+=1
-            i.save()
-            break
-    print(i.quantity)
-    print(obj_order_details)
-    return redirect('/')
-
-
-
+        # else:
+        #     print('--[id]--')
+        #     request.session['product_car']=[id]
+    print(request.session['product_car'])
+    print(producto)
+    return redirect(f'/productDetails/{id}')
 
 
 # # Create your views here.
@@ -170,3 +234,18 @@ def addToCard(request, id):
 #             print(i.nombre)
 #             return render(request,'ProductDetail.html')
 
+
+# DETALLES DE LOS PRODUCTOS
+
+def productDetails(request, id):
+    context={
+        'product_choose': Product.objects.get(id=id),
+        'products':Product.objects.all(),
+        'len_products':len(request.session['product_car']),
+    }
+    print('##########')
+    print(request.session['product_car'])
+    print(len(request.session['product_car']))
+    print(request.session['product_car'])
+    print('##########')
+    return render(request, 'productDetails.html', context)

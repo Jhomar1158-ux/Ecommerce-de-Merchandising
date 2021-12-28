@@ -34,10 +34,10 @@
                     <div class="nav-register"> 
                         <a href="/register">Register</a></li>
                     </div>
-                </div>
-                <div class="nav-carrito-compras">
-                    <p style="margin-left: 13px;">{{ len_products }}</p>
-                    <img src="{% static 'IMG/carrito-compras-icon.svg' %}" width="25vh" style="margin-left: 2px;">
+                    <div class="nav-carrito-compras">
+                        <p style="margin-left: 13px;">{{ len_products }}</p>
+                        <img src="{% static 'IMG/carrito-compras-icon.svg' %}" width="25vh" style="margin-left: 2px;">
+                    </div>
                 </div>
             </div>
             <div class="nav-right">
@@ -54,6 +54,24 @@
         </nav>
     </header>
     <main>
+        <div class="card" id="main-card">
+            <div class="card-image">
+                <img src="../../media/{{product_choose.image}}" alt="" class="image-resize"></p>
+            </div>
+            <div class="card-text">
+                <h2>{{product_choose.nombre}}</h2>
+                <p>{{product_choose.description}}</p>
+                <p>Stock: {{product_choose.stock}}</p>
+                <span class="price">S/{{product_choose.price}}</span>
+            </div>
+            <div class="card-buttom card-buttom-2">
+                <form action="/addToCard/{{product_choose.id}}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" class="buttom-2" value="Agregar al Carrito">
+                </form>
+            </div>
+        </div>
+        <!-- LINEA SEPARADORA -->
         {% for i in products %}
         <a href="/productDetails/{{ i.id }}">
             <div class="card">
@@ -67,9 +85,9 @@
                     <span class="price">S/{{i.price}}</span>
                 </div>
                 <div class="card-buttom">
-                    <form action="/addToCard/{{i.id}}/" method="POST">
+                    <form action="/addToCard/{{i.id}}" method="POST">
                         {% csrf_token %}
-                        <input type="submit" class="buttom-2" value="Ver Producto">
+                        <input type="submit" class="buttom-2" value="Agregar al Carrito">
                     </form>
                 </div>
             </div>
