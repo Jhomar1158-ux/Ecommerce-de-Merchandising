@@ -240,12 +240,7 @@ def addToCard(request, id):
 def productDetails(request, id):
     context={
         'product_choose': Product.objects.get(id=id),
-        'products':Product.objects.all(),
-        'len_products':len(request.session['product_car']),
+        'products': Product.objects.all(),
     }
-    print('##########')
-    print(request.session['product_car'])
-    print(len(request.session['product_car']))
-    print(request.session['product_car'])
-    print('##########')
+    
     return render(request, 'productDetails.html', context)

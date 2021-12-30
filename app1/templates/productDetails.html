@@ -73,25 +73,27 @@
         </div>
         <!-- LINEA SEPARADORA -->
         {% for i in products %}
-        <a href="/productDetails/{{ i.id }}">
-            <div class="card">
-                <div class="card-image">
-                    
-                    <img src="../../media/{{i.image}}" alt="" class="image-resize"></p>
-                </div>
-                <div class="card-text">
-                    <h2>{{i.nombre}}</h2>
-                    <p>Stock: {{i.stock}}</p>
-                    <span class="price">S/{{i.price}}</span>
-                </div>
-                <div class="card-buttom">
-                    <form action="/addToCard/{{i.id}}" method="POST">
-                        {% csrf_token %}
-                        <input type="submit" class="buttom-2" value="Agregar al Carrito">
-                    </form>
-                </div>
-            </div>
-        </a>
+            {% if i != product_choose %}
+                <a href="/productDetails/{{ i.id }}">
+                    <div class="card">
+                        <div class="card-image">
+                            
+                            <img src="../../media/{{i.image}}" alt="" class="image-resize"></p>
+                        </div>
+                        <div class="card-text">
+                            <h2>{{i.nombre}}</h2>
+                            <p>Stock: {{i.stock}}</p>
+                            <span class="price">S/{{i.price}}</span>
+                        </div>
+                        <div class="card-buttom">
+                            <form action="/addToCard/{{i.id}}" method="POST">
+                                {% csrf_token %}
+                                <input type="submit" class="buttom-2" value="Agregar al Carrito">
+                            </form>
+                        </div>
+                    </div>
+                </a>
+            {% endif %}
         {% endfor %}
     </main>
     <footer>
