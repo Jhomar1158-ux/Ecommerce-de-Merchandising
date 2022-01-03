@@ -17,7 +17,6 @@ def index(request):
     
     if 'u_id' not in request.session:
         request.session['u_id'] = 0
-    
     context={
         'products':Product.objects.all()
     }
@@ -211,21 +210,30 @@ def logout(request):
 #     return redirect('/')
 
 def addToCard(request, id):
-    producto=Product.objects.filter(id=id)
+    list_product=[]
+    producto=Product.objects.get(id=id)
+    if list_product:
+        list_product.append(producto)
+    print(list_product)
     if producto:
-        if 'product_car' not in request.session:
-            request.session['product_car'] = 0
-        if 'product_car' in request.session:
-            print('--append--')
-            request.session['product_car'].append(id)
+        if request.session.get('product_car') == None:
+            request.session['product_car']=0
+        print('--append--')
+        request.session['product_car']+=1
 
-        # else:
-        #     print('--[id]--')
-        #     request.session['product_car']=[id]
-    print(request.session['product_car'])
-    print(producto)
+    # REVISAR APPEND
+    # print(producto)
+    
+    # context={
+    #     'product_choose': Product.objects.get(id=id),
+    #     'products':Product.objects.all(),
+    # }
+    # return render(request,'productDetails.html',context)
+
+
     return redirect(f'/productDetails/{id}')
 
+    
 
 # # Create your views here.
 # def search(request):

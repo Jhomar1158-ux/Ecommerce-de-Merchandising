@@ -35,7 +35,8 @@
                         <a href="/register">Register</a></li>
                     </div>
                     <div class="nav-carrito-compras">
-                        <p style="margin-left: 13px;">{{ len_products }}</p>
+                        <!-- <p style="margin-left: 13px;"> len_products </p> -->
+                        <p style="margin-left: 13px;"> {{ request.session.product_car }} </p>
                         <img src="{% static 'IMG/carrito-compras-icon.svg' %}" width="25vh" style="margin-left: 2px;">
                     </div>
                 </div>

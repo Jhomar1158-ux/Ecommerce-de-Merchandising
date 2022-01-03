@@ -67,7 +67,7 @@
                     <span class="price">S/{{i.price}}</span>
                 </div>
                 <div class="card-buttom">
-                    <form action="/addToCard/{{i.id}}/" method="POST">
+                    <form action="/productDetails/{{i.id}}" method="POST">
                         {% csrf_token %}
                         <input type="submit" class="buttom-2" value="Ver Producto">
                     </form>
